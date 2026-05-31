@@ -1,0 +1,16 @@
+media/
+subtitles/
+*.srt
+*.vtt
+*.ass
+
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+.env
+*.egg-info/
+dist/
+build/
+.DS_Store

@@ -1,0 +1,12 @@
+# Apple Silicon — MLX 加速
+mlx-whisper>=0.4.0
+
+# 进度条
+tqdm>=4.66.0
+
+# Ollama HTTP 客户端
+requests>=2.31.0
+
+# 开发工具（可选）
+# ruff>=0.4.0
+# pyright>=1.1.0

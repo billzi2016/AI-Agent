@@ -1,79 +1,79 @@
 # Build Your Own AI Coding Agent
 
-从零手搓一个本地 AI Coding Agent——复刻 Claude Code 核心架构，完全基于 Ollama（无需云 API）。
+Build a local AI coding agent from scratch: a Claude Code-style architecture implemented entirely on top of Ollama, without requiring any cloud API.
 
-## 课程简介
+## Course Overview
 
-这门课把「如何构建 AI Coding Agent」这件事拆成 15 个渐进式 Jupyter Notebook，每章聚焦一个模块，跑完代码就能理解原理。
+This course breaks down the process of building an AI coding agent into 15 progressive Jupyter notebooks. Each chapter focuses on one module, and the code is designed so that running it helps explain the underlying architecture.
 
-最终产物：一个跑在本地的 AI 编码助手，能读写文件、搜索网络、调用工具，自主完成代码任务。
+Final outcome: a local AI coding assistant that can read and write files, search the web, call tools, and autonomously complete coding tasks.
 
-## 技术栈
+## Tech Stack
 
-| 组件 | 选型 |
-|------|------|
-| 本地 LLM | [Ollama](https://ollama.ai) + `gpt-oss:120b` |
-| LLM 客户端 | OpenAI SDK（兼容接口） |
+| Component | Choice |
+|-----------|--------|
+| Local LLM | [Ollama](https://ollama.ai) + `gpt-oss:120b` |
+| LLM client | OpenAI SDK compatible interface |
 | CLI | Click |
-| 终端 UI | Rich |
-| 参数验证 | Pydantic v2 |
-| Token 计数 | tiktoken |
-| 网络请求 | httpx（async） |
-| 网络搜索 | duckduckgo-search |
+| Terminal UI | Rich |
+| Validation | Pydantic v2 |
+| Token counting | tiktoken |
+| Network requests | httpx async |
+| Web search | duckduckgo-search |
 
-## 课程结构
+## Course Structure
 
-| 章节 | 内容 | 核心产物 |
-|------|------|----------|
-| 01 | 异步 LLM 客户端 | `LLMClient`，流式输出，指数退避重试 |
-| 02 | Context Manager | `ContextManager`，token 计数，系统 prompt |
-| 03 | Tool Framework | `Tool` 抽象基类，`ToolRegistry`，`ToolResult` |
+| Chapter | Topic | Core Output |
+|---------|-------|-------------|
+| 01 | Async LLM client | `LLMClient`, streaming output, exponential backoff retry |
+| 02 | Context Manager | `ContextManager`, token counting, system prompt |
+| 03 | Tool Framework | `Tool` abstract base class, `ToolRegistry`, `ToolResult` |
 | 04 | File Tools | ReadFile / WriteFile / Edit / ListDir / Glob |
 | 05 | Network Tools | WebSearch / WebFetch |
-| 06 | Agentic Loop | Agent 主循环，流式 tool_calls 解析 |
-| 07 | Session & CLI | Session 对象，Rich TUI，Click CLI |
-| 08 | Context Compression | ChatCompactor，工具输出剪枝 |
-| 09 | Approval & Safety | 五种审批策略，路径安全 |
-| 10 | Persistence | 会话存档，检查点恢复 |
-| 11 | Sub-Agents | 子代理模式，工具白名单隔离 |
-| 12 | MCP Protocol | Model Context Protocol，外部工具接入 |
-| 13 | Tool Discovery | 动态加载自定义工具（插件机制） |
-| 14 | Hooks & Loop Detection | 生命周期钩子，循环检测 |
-| 15 | Full Agent | 完整系统组装，集成测试 |
+| 06 | Agentic Loop | Main agent loop, streaming `tool_calls` parsing |
+| 07 | Session & CLI | Session object, Rich TUI, Click CLI |
+| 08 | Context Compression | `ChatCompactor`, tool-output pruning |
+| 09 | Approval & Safety | Five approval strategies, path safety |
+| 10 | Persistence | Session archive, checkpoint recovery |
+| 11 | Sub-Agents | Sub-agent pattern, tool allowlist isolation |
+| 12 | MCP Protocol | Model Context Protocol, external tool integration |
+| 13 | Tool Discovery | Dynamic custom tool loading through a plugin mechanism |
+| 14 | Hooks & Loop Detection | Lifecycle hooks, loop detection |
+| 15 | Full Agent | Full system assembly and integration tests |
 
-## 快速开始
+## Quick Start
 
 ```bash
-# 1. 安装 Ollama 并拉取模型
+# 1. Install Ollama and pull the model
 ollama pull gpt-oss:120b
 
-# 2. 安装依赖
+# 2. Install dependencies
 pip install openai tiktoken pydantic click rich httpx \
             duckduckgo-search toml mcp pytest
 
-# 3. 从第一章开始
+# 3. Start from Chapter 1
 cd course
 jupyter lab 01_ollama_llm_client.ipynb
 ```
 
-## 前置要求
+## Prerequisites
 
 - Python 3.11+
-- Ollama 已安装并运行（`ollama serve`）
-- 会 Python 异步编程（`async/await`）
-- 用过 LLM API（知道 messages 格式）
+- Ollama installed and running with `ollama serve`
+- Familiarity with Python async programming using `async` / `await`
+- Basic experience with LLM APIs and the `messages` format
 
-## 运行完整 Agent
+## Run the Full Agent
 
-完成全部章节后：
+After completing all chapters:
 
 ```bash
 cd course
-python main.py                    # 交互模式
-python main.py -p "分析这个项目"   # 一次性模式
-python main.py --approval YOLO    # 跳过所有确认
+python main.py                    # Interactive mode
+python main.py -p "Analyze this project"   # One-shot mode
+python main.py --approval YOLO    # Skip all confirmations
 ```
 
-## 课程设计说明
+## Course Design Notes
 
-参见 [PRD_AI_Agent_Course.md](./PRD_AI_Agent_Course.md)，其中包含完整的课程规划和每章详细规格。
+See [PRD_AI_Agent_Course.md](./PRD_AI_Agent_Course.md) for the complete course plan and detailed specifications for every chapter.

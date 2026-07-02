@@ -8,6 +8,29 @@ This course breaks down the process of building an AI coding agent into 15 progr
 
 Final outcome: a local AI coding assistant that can read and write files, search the web, call tools, and autonomously complete coding tasks.
 
+## Runnable Agent Package
+
+The full agent implementation now lives in the top-level `agent/` package. The old monolithic `course/main.py` entry point has been moved into the package as `agent/main.py`, and the actual code is split by responsibility:
+
+```text
+agent/
+  cli.py              # Click CLI, REPL, slash commands
+  session.py          # Agent assembly and runtime session state
+  loop.py             # Agentic loop and tool-call execution
+  llm_client.py       # OpenAI-compatible async LLM client for Ollama
+  context.py          # Messages, token accounting, context compression
+  tooling.py          # Tool base class, result type, registry
+  file_tools.py       # Read/write/edit/list/glob filesystem tools
+  network_tools.py    # Web search and web fetch tools
+  approval.py         # Approval policies and path safety checks
+  persistence.py      # Session snapshots and checkpoints
+  hooks.py            # Lifecycle hooks
+  loop_detection.py   # Repeated action and cycle detection
+  discovery.py        # Runtime custom tool discovery
+  sub_agents.py       # Investigator and reviewer sub-agent examples
+  mcp.py              # MCP manager boundary
+```
+
 ## Tech Stack
 
 | Component | Choice |
@@ -68,10 +91,24 @@ jupyter lab 01_ollama_llm_client.ipynb
 After completing all chapters:
 
 ```bash
-cd course
-python main.py                    # Interactive mode
-python main.py -p "Analyze this project"   # One-shot mode
-python main.py --approval YOLO    # Skip all confirmations
+# From the repository root
+python -m agent                    # Interactive mode
+python -m agent -p "Analyze this project"   # One-shot mode
+python -m agent --approval YOLO    # Skip all confirmations
+```
+
+The package-local entry point is also available:
+
+```bash
+python agent/main.py
+```
+
+## Run Tests
+
+The `agent/tests/` directory contains `unittest` coverage for local logic that does not require a running Ollama server:
+
+```bash
+python -m unittest discover -s agent/tests -p "test_*.py"
 ```
 
 ## Course Design Notes

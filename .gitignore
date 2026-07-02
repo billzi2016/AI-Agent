@@ -7,6 +7,9 @@ venv/
 *.egg-info/
 dist/
 build/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
 
 # Jupyter
 .ipynb_checkpoints/
@@ -27,6 +30,10 @@ Whisper/subtitles/
 
 # Claude Code internal
 .claude/
+
+# AI Agent runtime state
+.ai_agent/sessions/
+.ai_agent/checkpoints/
 
 # Secrets
 .env
